@@ -1,4 +1,5 @@
 require "sqlite3"
+require_relative "bash_parser"
 
 class DatabaseInstaller
   def self.create_database #создает саму БД и ее структуру
@@ -14,8 +15,8 @@ class DatabaseInstaller
     SQL
   end
 
-  def fill_database_from_bash #заполняет БД данными с http://bash.im
-    
+  def self.fill_database_from_bash #заполняет БД данными с http://bash.im
+    parser = BashParser.new
   end 
   
   
