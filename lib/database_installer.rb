@@ -4,7 +4,7 @@ require_relative "bash_parser"
 class DatabaseInstaller
   
   def self.db
-    db = SQLite3::Database.new "bashim.sqlite3"
+    SQLite3::Database.new "bashim.sqlite3"
   end
 
   def self.create_database #создает саму БД и ее структуру    
@@ -21,14 +21,18 @@ class DatabaseInstaller
   def self.fill_database_from_bash #заполняет БД данными с http://bash.im
     parser = BashParser.new
     parser.posts.each do |post|
-      begin
-        db.execute("INSERT INTO posts (number, ratio, datetime, text) 
-            VALUES (?, ?, ?, ?)", [post.number, post.ratio, post.date, post.text])  
-      rescue SQLite3::ConstraintException #если БД уже создана и там есть записи, но уникальность не дает вставить повторяющуюся - пропускаем дубль
-        next  
-      end      
+      insert_record post
     end
   end 
+
+  def self.insert_record(post)
+    begin
+        db.execute("INSERT INTO posts (number, ratio, datetime, text) 
+            VALUES (?, ?, ?, ?)", [post.number, post.ratio, post.date, post.text])  
+      rescue SQLite3::ConstraintException #если БД уже создана и там есть записи, но уникальность не дает вставить повторяющуюся - пропускаем дубль. Просто вернем nil
+        nil  
+      end      
+  end
   
   
 end
