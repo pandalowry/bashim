@@ -23,7 +23,7 @@ class DatabaseInstaller
     parser.posts.each do |post|
       begin
         db.execute("INSERT INTO posts (number, ratio, datetime, text) 
-            VALUES (?, ?, ?, ?)", [post.number, post.ratio.nil? ? 'NULL' : post.ratio, post.date, post.text])  
+            VALUES (?, ?, ?, ?)", [post.number, post.ratio, post.date, post.text])  
       rescue SQLite3::ConstraintException #если БД уже создана и там есть записи, но уникальность не дает вставить повторяющуюся - пропускаем дубль
         next  
       end      
