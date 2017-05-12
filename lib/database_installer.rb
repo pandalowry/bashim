@@ -11,7 +11,7 @@ class DatabaseInstaller
     rows = db.execute <<-SQL
       CREATE TABLE "posts" (
           "number" INTEGER PRIMARY KEY NOT NULL,
-          "ratio" INTEGER DEFAULT ('NULL'),
+          "ratio" INTEGER DEFAULT NULL,
           "datetime" TEXT NOT NULL,
           "text" TEXT NOT NULL
       );
